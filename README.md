@@ -28,7 +28,7 @@ O objetivo deste projeto é demonstrar a geração de simulações financeiras c
 ## 📸 Captura de Tela
 
 ![Simulação Browniana](./docs/screenshot.png)
-![Simulação Browniana](./docs/funcional.gif)
+![ExecuçãoSimulação Browniana](./docs/funcional.gif)
 
 ---
 
