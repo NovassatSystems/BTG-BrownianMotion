@@ -1,0 +1,26 @@
+<Border
+    x:Class="BTGBrownianMotion.Controls.CustomButton"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="root"
+    Padding="16"
+    BackgroundColor="White"
+    StrokeShape="{RoundRectangle CornerRadius=8}"
+    StrokeThickness="0">
+
+    <Border.GestureRecognizers>
+        <TapGestureRecognizer Command="{Binding Command, Source={x:Reference root}}" />
+    </Border.GestureRecognizers>
+
+    <VerticalStackLayout>
+        <Image
+            HeightRequest="32"
+            Source="{Binding Icon, Source={x:Reference root}}"
+            WidthRequest="32" />
+        <Label
+            FontFamily="PrometoBlack"
+            HorizontalOptions="Center"
+            Text="{Binding Text, Source={x:Reference root}}"
+            TextColor="#1C274C" />
+    </VerticalStackLayout>
+</Border>

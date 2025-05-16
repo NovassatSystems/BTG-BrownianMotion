@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BTGBrownianMotion.Features.Main.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BTGBrownianMotion.Controls"
+    xmlns:picker="clr-namespace:Maui.ColorPicker;assembly=Maui.ColorPicker"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Stepper">
+                <Setter Property="HeightRequest" Value="32" />
+                <!--<Setter Property="WidthRequest" Value="100" />-->
+
+                <Setter Property="BackgroundColor" Value="DimGray" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+
+        <Grid
+            Padding="24"
+            ColumnDefinitions="*,Auto"
+            ColumnSpacing="16"
+            RowDefinitions="Auto,*,Auto"
+            RowSpacing="16">
+
+            <Image
+                Grid.Row="0"
+                Margin="0,0,0,24"
+                HeightRequest="128"
+                HorizontalOptions="Start"
+                Source="btg.png" />
+
+            <!--#region GRÁFICO-->
+
+            <GraphicsView
+                x:Name="GraphView"
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                HeightRequest="{Binding Height, Source={x:Reference verticalSize}}"
+                VerticalOptions="Start" />
+            <!--#endregion GRÁFICO-->
+
+            <!--#region CONTROLES-->
+            <Grid
+                x:Name="vertical"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                ColumnDefinitions="Auto,Auto,*,Auto,Auto"
+                ColumnSpacing="16"
+                VerticalOptions="Start">
+
+                <!--#region  PICKERS-->
+                <Grid
+                    Grid.Column="0"
+                    RowDefinitions="Auto,*,Auto,*"
+                    RowSpacing="16">
+
+                    <!--#region COR DE FUNDO PICKER-->
+                    <Label Text="Cor do fundo do gráfico" TextColor="White" />
+                    <Picker
+                        Grid.Row="1"
+                        ItemsSource="{Binding BackgroundColorOptions}"
+                        SelectedItem="{Binding BackgroundColorOption}"
+                        VerticalOptions="Start" />
+                    <!--#endregion COR DE FUNDO-->
+
+                    <!--#region ESTILO LINHA-->
+                    <Label
+                        Grid.Row="2"
+                        Text="Estilo da linha"
+                        TextColor="White" />
+                    <Picker
+                        Grid.Row="3"
+                        ItemsSource="{Binding LineStyleOptions}"
+                        SelectedItem="{Binding SelectedLineStyle}"
+                        VerticalOptions="Start" />
+                    <!--#endregion ESTILO LINHA-->
+
+                </Grid>
+                <!--#endregion  PICKERS-->
+
+                <!--#region STEPPERS-->
+                <Grid
+                    Grid.Column="1"
+                    ColumnDefinitions="*,*"
+                    ColumnSpacing="24"
+                    RowDefinitions="*,*">
+
+                    <!--#region LINHAS HORIZONTAIS-->
+                    <Grid
+                        ColumnDefinitions="Auto,Auto"
+                        RowDefinitions="Auto,Auto"
+                        RowSpacing="16">
+                        <Label
+                            Grid.ColumnSpan="2"
+                            Text="Linhas horizontais"
+                            TextColor="White"
+                            VerticalOptions="Start" />
+                        <Stepper
+                            Grid.Row="1"
+                            Increment="1"
+                            Maximum="15"
+                            Minimum="4"
+                            Value="{Binding HorizontalLineCount, Mode=TwoWay}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontFamily="PrometoBlack"
+                            FontSize="12"
+                            Text="{Binding HorizontalLineCount}"
+                            TextColor="LightGray"
+                            VerticalOptions="Center" />
+
+
+                    </Grid>
+                    <!--#endregion LINHAS HORIZONTAIS-->
+
+                    <!--#region LINHAS VERTICAIS-->
+                    <Grid
+                        Grid.Column="1"
+                        ColumnDefinitions="Auto,Auto"
+                        RowDefinitions="Auto,Auto"
+                        RowSpacing="16">
+                        <Label
+                            Grid.ColumnSpan="2"
+                            Text="Linhas verticais"
+                            TextColor="White" />
+                        <Stepper
+                            Grid.Row="1"
+                            Increment="1"
+                            Maximum="15"
+                            Minimum="4"
+                            Value="{Binding VerticalLineCount, Mode=TwoWay}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontFamily="PrometoBlack"
+                            FontSize="12"
+                            Text="{Binding VerticalLineCount}"
+                            TextColor="LightGray"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <!--#endregion LINHAS VERTICAIS-->
+
+                    <!--#region VOLATILIDADE-->
+                    <Grid
+                        Grid.Row="1"
+                        ColumnDefinitions="Auto,Auto"
+                        RowDefinitions="Auto,Auto"
+                        RowSpacing="16">
+
+
+                        <Label
+                            Grid.ColumnSpan="2"
+                            HorizontalOptions="Start"
+                            Text="Volatilidade (%)"
+                            TextColor="White" />
+
+
+                        <Stepper
+                            Grid.Row="1"
+                            Increment="0.5"
+                            Maximum="100"
+                            Minimum="0"
+                            Value="{Binding Volatility, Mode=TwoWay}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontSize="12"
+                            Text="{Binding Volatility, StringFormat='{0:F1}%'}"
+                            TextColor="LightGray"
+                            VerticalOptions="Center" />
+
+                    </Grid>
+                    <!--#endregion VOLATILIDADE-->
+
+                    <!--#region DIAS-->
+                    <Grid
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        ColumnDefinitions="Auto,Auto"
+                        RowDefinitions="Auto,Auto"
+                        RowSpacing="16">
+                        <Label
+                            Grid.ColumnSpan="2"
+                            Text="Tempo (dias)"
+                            TextColor="White" />
+                        <Stepper
+                            Grid.Row="1"
+                            Increment="10"
+                            Maximum="500"
+                            Minimum="30"
+                            Value="{Binding Days, Mode=TwoWay}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontSize="12"
+                            Text="{Binding Days}"
+                            TextColor="LightGray"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <!--#endregion DIAS-->
+
+                </Grid>
+                <!--#endregion STEPPERS-->
+
+                <!--#region SLIDERS-->
+                <Grid
+                    Grid.Column="2"
+                    RowDefinitions="Auto,*,Auto,*"
+                    RowSpacing="16">
+
+                    <!--#region PREÇO INICIAL-->
+                    <Label Text="{Binding InitialPrice, StringFormat='Preço Inicial - R$ {0:F0}'}" TextColor="White" />
+                    <Slider
+                        Grid.Row="1"
+                        Maximum="1000"
+                        Minimum="10"
+                        Value="{Binding InitialPrice, Mode=TwoWay}" />
+                    <!--#endregion PREÇO INICIAL-->
+
+                    <!--#region RETORNO MEDIO-->
+                    <Label
+                        Grid.Row="2"
+                        Text="{Binding ReturnValue, StringFormat='Retorno médio (%) {0:F1}%'}"
+                        TextColor="White" />
+                    <Slider
+                        Grid.Row="3"
+                        Maximum="10"
+                        Minimum="-10"
+                        Value="{Binding ReturnValue, Mode=TwoWay}" />
+                    <!--#endregion RETORNO MEDIO-->
+
+                </Grid>
+                <!--#endregion SLIDERS-->
+
+                <!--#region COLOR PICKER-->
+                <Grid
+                    Grid.Column="3"
+                    RowDefinitions="Auto,*"
+                    RowSpacing="16"
+                    WidthRequest="{Binding Width, Source={x:Reference buttonSize}}">
+                    <!--#region COR LINHA-->
+                    <Label
+                        FontFamily="PrometoXBold"
+                        Text="Cor da linha"
+                        TextColor="White" />
+                    <Border
+                        Grid.Row="1"
+                        StrokeShape="{RoundRectangle CornerRadius=8}"
+                        StrokeThickness="0">
+
+                        <picker:ColorPicker
+                            x:Name="ColorPicker"
+                            ColorFlowDirection="Horizontal"
+                            ColorSpectrumStyle="TintToHueToShadeStyle"
+                            HorizontalOptions="Fill"
+                            PickedColorChanged="ColorPicker_PickedColorChanged"
+                            PointerRingBorderUnits="0.3"
+                            PointerRingDiameterUnits="0.5"
+                            VerticalOptions="Fill" />
+                    </Border>
+                    <!--#endregion COR LINHA-->
+                </Grid>
+                <!--#endregion COLOR PICKER-->
+
+                <!--#region BUTTONS-->
+                <Grid
+                    x:Name="buttonSize"
+                    Grid.Column="4"
+                    ColumnDefinitions="*,*"
+                    ColumnSpacing="16"
+                    HorizontalOptions="Fill"
+                    RowDefinitions="*,*"
+                    RowSpacing="16"
+                    VerticalOptions="Fill"
+                    WidthRequest="{Binding Width, Source={x:Reference verticalSize}}">
+                    <controls:CustomButton
+                        Command="{Binding GenerateSimulationCommand}"
+                        Icon="random.png"
+                        Text="Gerar Simulação" />
+                    <controls:CustomButton
+                        Grid.Column="1"
+                        Command="{Binding AddSimulationCommand}"
+                        Icon="add.png"
+                        Text="Adicionar Simulação" />
+                    <controls:CustomButton
+                        Grid.Row="1"
+                        Clicked="OnExportarGraficoClicked"
+                        Icon="export.png"
+                        Text="Exportar Gráfico" />
+                    <controls:CustomButton
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Command="{Binding ClearSimulationsCommand}"
+                        Icon="clear.png"
+                        Text="Limpar Gráfico" />
+                </Grid>
+                <!--#endregion BUTTONS-->
+
+            </Grid>
+            <!--#endregion CONTROLES-->
+
+            <!--#region LEGENDA-->
+            <VerticalStackLayout
+                x:Name="verticalSize"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,0,0,0"
+                Spacing="16"
+                VerticalOptions="Fill">
+
+                <Label
+                    FontAttributes="Bold"
+                    Text="Legenda"
+                    TextColor="White" />
+
+                <CollectionView
+                    ItemsSource="{Binding LegendItems}"
+                    SelectedItem="{Binding SelectedLegendItem, Mode=TwoWay}"
+                    SelectionMode="Single"
+                    VerticalOptions="Center">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+
+                            <HorizontalStackLayout
+                                Padding="4"
+                                Spacing="16"
+                                VerticalOptions="Center">
+                                <RadioButton
+                                    CheckedChanged="RadioButton_CheckedChanged"
+                                    GroupName="Curvas"
+                                    IsChecked="{Binding IsSelected}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    FontSize="14"
+                                    Text="Mostrar informação"
+                                    TextColor="White"
+                                    TranslationX="-24"
+                                    TranslationY="-8"
+                                    VerticalOptions="Center" />
+
+                                <GraphicsView
+                                    Drawable="{Binding Drawable}"
+                                    HeightRequest="12"
+                                    TranslationY="-4"
+                                    VerticalOptions="Center"
+                                    WidthRequest="40" />
+
+                                <Label
+                                    FontSize="12"
+                                    Text="{Binding Label}"
+                                    TextColor="White"
+                                    TranslationY="-8"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+            <!--#endregion LEGENDA-->
+
+        </Grid>
+    </ScrollView>
+</ContentPage>
